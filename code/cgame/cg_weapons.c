@@ -609,38 +609,37 @@ static void CG_PlasmaTrail(centity_t* cent, const weaponInfo_t* wi)
 CG_GrappleTrail
 ==========================
 */
-void CG_GrappleTrail(centity_t* ent, const weaponInfo_t* wi)
-{
-	vec3_t  origin;
-	entityState_t*   es;
-	vec3_t          forward, up;
-	refEntity_t     beam;
+void CG_GrappleTrail( centity_t *ent, const weaponInfo_t *wi ) {
+	vec3_t	origin;
+	entityState_t	*es;
+	vec3_t			forward, up;
+	refEntity_t		beam;
 
 	es = &ent->currentState;
 
-	BG_EvaluateTrajectory(&es->pos, cg.time, origin);
+	BG_EvaluateTrajectory( &es->pos, cg.time, origin );
 	ent->trailTime = cg.time;
 
-	memset(&beam, 0, sizeof(beam));
+	memset( &beam, 0, sizeof( beam ) );
 	//FIXME adjust for muzzle position
-	VectorCopy(cg_entities[ ent->currentState.otherEntityNum ].lerpOrigin, beam.origin);
+	VectorCopy ( cg_entities[ ent->currentState.otherEntityNum ].lerpOrigin, beam.origin );
 	beam.origin[2] += 26;
-	AngleVectors(cg_entities[ ent->currentState.otherEntityNum ].lerpAngles, forward, NULL, up);
-	VectorMA(beam.origin, -6, up, beam.origin);
-	VectorCopy(origin, beam.oldorigin);
+	AngleVectors( cg_entities[ ent->currentState.otherEntityNum ].lerpAngles, forward, NULL, up );
+	VectorMA( beam.origin, -6, up, beam.origin );
+	VectorCopy( origin, beam.oldorigin );
 
-	if (Distance(beam.origin, beam.oldorigin) < 64)
+	if (Distance( beam.origin, beam.oldorigin ) < 64 )
 		return; // Don't draw if close
 
-	beam.reType = RT_LIGHTNING;
-	beam.customShader = cgs.media.lightningShader;
+	beam.reType = RT_RAIL_CORE;
+	beam.customShader = cgs.media.grappleShader;
 
-	AxisClear(beam.axis);
+	AxisClear( beam.axis );
 	beam.shaderRGBA[0] = 0xff;
 	beam.shaderRGBA[1] = 0xff;
 	beam.shaderRGBA[2] = 0xff;
 	beam.shaderRGBA[3] = 0xff;
-	trap_R_AddRefEntityToScene(&beam);
+	trap_R_AddRefEntityToScene( &beam );
 }
 
 /*
@@ -854,17 +853,21 @@ void CG_RegisterWeapon(int weaponNum)
 
 			break;
 
-		case WP_GRAPPLING_HOOK:
-			MAKERGB(weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f);
-			weaponInfo->missileModel = trap_R_RegisterModel("models/ammo/rocket/rocket.md3");
+		case WP_GRAPPLING_HOOK:		
+			MAKERGB( weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f );
+			weaponInfo->missileModel = trap_R_RegisterModel( "models/weapons2/grapple2/grapple_grip.md3" );
 			weaponInfo->missileTrailFunc = CG_GrappleTrail;
-			weaponInfo->missileDlight = 200;
+			weaponInfo->missileDlight = 0;
 			weaponInfo->wiTrailTime = 2000;
 			weaponInfo->trailRadius = 64;
-			MAKERGB(weaponInfo->missileDlightColor, 1, 0.75f, 0);
-			weaponInfo->readySound = trap_S_RegisterSound("sound/weapons/melee/fsthum.wav", qfalse);
-			weaponInfo->firingSound = trap_S_RegisterSound("sound/weapons/melee/fstrun.wav", qfalse);
-			break;
+			MAKERGB( weaponInfo->missileDlightColor, 1, 0.75f, 0 );
+			cgs.media.grappleShader = trap_R_RegisterShader( "grappleRope");
+			//weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/grapple/contact.wav", qfalse );
+			//weaponInfo->firingSound = trap_S_RegisterSound( "sound/weapons/grapple/firingsound.wav", qfalse);
+			weaponInfo->missileSound = trap_S_RegisterSound( "sound/weapons/grapple/grappull.wav", qfalse );
+			weaponInfo->loopFireSound = qtrue;		
+		        //cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltNew");
+		break;
 
 		case WP_MACHINEGUN:
 			MAKERGB(weaponInfo->flashDlightColor, 1, 1, 0);

@@ -797,6 +797,7 @@ typedef struct
 	qhandle_t   grenadeCPMAModel;
 	qhandle_t   waterBubbleShader;
 	qhandle_t   bloodTrailShader;
+	qhandle_t	grappleShader;	// leilei - grapple hook
 
 	qhandle_t   numberShaders[11];
 
@@ -1214,6 +1215,10 @@ typedef struct
 	// media
 	cgMedia_t       media;
 	cgs_osp_t osp;
+
+	//hook
+	unsigned int	g_grapplePull;
+  	unsigned int	g_grappleDelayTime;
 } cgs_t;
 
 //==============================================================================

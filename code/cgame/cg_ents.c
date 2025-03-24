@@ -588,37 +588,34 @@ CG_Grapple
 This is called when the grapple is sitting up against the wall
 ===============
 */
-static void CG_Grapple(centity_t* cent)
-{
-	refEntity_t         ent;
-	entityState_t*       s1;
-	const weaponInfo_t*      weapon;
+static void CG_Grapple( centity_t *cent ) {
+	refEntity_t			ent;
+	entityState_t		*s1;
+	const weaponInfo_t		*weapon;
 
 	s1 = &cent->currentState;
-	if (s1->weapon > WP_NUM_WEAPONS)
-	{
-		s1->weapon = 0;
+	if ( s1->weapon >= WP_NUM_WEAPONS ) {
+		s1->weapon = WP_NONE;
 	}
 	weapon = &cg_weapons[s1->weapon];
 
 	// calculate the axis
-	VectorCopy(s1->angles, cent->lerpAngles);
+	VectorCopy( s1->angles, cent->lerpAngles);
 
 #if 0 // FIXME add grapple pull sound here..?
 	// add missile sound
-	if (weapon->missileSound)
-	{
-		trap_S_AddLoopingSound(cent->currentState.number, cent->lerpOrigin, vec3_origin, weapon->missileSound);
+	if ( weapon->missileSound ) {
+		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, weapon->missileSound );
 	}
 #endif
 
 	// Will draw cable if needed
-	CG_GrappleTrail(cent, weapon);
+	CG_GrappleTrail ( cent, weapon );
 
 	// create the render entity
-	memset(&ent, 0, sizeof(ent));
-	VectorCopy(cent->lerpOrigin, ent.origin);
-	VectorCopy(cent->lerpOrigin, ent.oldorigin);
+	memset (&ent, 0, sizeof(ent));
+	VectorCopy( cent->lerpOrigin, ent.origin);
+	VectorCopy( cent->lerpOrigin, ent.oldorigin);
 
 	// flicker between two skins
 	ent.skinNum = cg.clientFrame & 1;
@@ -626,12 +623,11 @@ static void CG_Grapple(centity_t* cent)
 	ent.renderfx = weapon->missileRenderfx | RF_NOSHADOW;
 
 	// convert direction of travel into axis
-	if (VectorNormalize2(s1->pos.trDelta, ent.axis[0]) == 0)
-	{
+	if ( VectorNormalize2( s1->pos.trDelta, ent.axis[0] ) == 0 ) {
 		ent.axis[0][2] = 1;
 	}
 
-	trap_R_AddRefEntityToScene(&ent);
+	trap_R_AddRefEntityToScene( &ent );
 }
 
 /*
