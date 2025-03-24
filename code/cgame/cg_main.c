@@ -650,7 +650,7 @@ static cvarTable_t cvarTable[] =
 	{ &cg_unfreezeAlert, "cg_unfreezeAlert", "0", CVAR_ARCHIVE },
 	{ &cg_itemsRespawnAnimation, "cg_itemsRespawnAnimation", "1", CVAR_ARCHIVE },
 	{ &cg_predictStepOffset, "cg_predictStepOffset", "1", CVAR_ARCHIVE },
-	{ &cg_enemyLightningColor, "cg_enemyLightningColor", "6", CVAR_ARCHIVE, CG_LocalEventCvarChanged_cg_enemyLightningColor },
+	{ &cg_enemyLightningColor, "cg_enemyLightningColor", "0", CVAR_ARCHIVE, CG_LocalEventCvarChanged_cg_enemyLightningColor },
 	{ &cg_uniqueColorTable, "cg_uniqueColorTable", "1", CVAR_ARCHIVE },
 	{ &cg_noVoteBeep, "cg_noVoteBeep", "0", CVAR_ARCHIVE },
 };
