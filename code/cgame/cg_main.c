@@ -525,6 +525,7 @@ static cvarTable_t cvarTable[] =
 	{ &ch_3waveFont, "ch_3waveFont", "0", CVAR_ARCHIVE },
 	{ &ch_ColorLocations, "ch_ColorLocations", "1", CVAR_ARCHIVE },
 	{ &ch_CrosshairColor, "ch_crosshairColor", "White", CVAR_ARCHIVE, CG_LocalEventCvarChanged_ch_crosshairColor},
+	{ &ch_CrosshairColor, "cg_crosshairColor", "White", CVAR_ARCHIVE, CG_LocalEventCvarChanged_ch_crosshairColor},
 	{ &cf_CrosshairNames, "cf_CrosshairNames", "12x12", CVAR_ARCHIVE },
 	{ &ch_CrosshairNamesLeft, "ch_CrosshairNamesLeft", "0", CVAR_ARCHIVE },
 	{ &ch_crosshairTeamInfo, "ch_crosshairTeamInfo", "1", CVAR_ARCHIVE },
