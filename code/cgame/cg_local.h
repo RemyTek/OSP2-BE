@@ -877,17 +877,17 @@ typedef struct
 	qhandle_t   blender180Shader;
 
 	//superhud
-	qhandle_t	obituariesGrenadeDirect;
-	qhandle_t	obituariesRocketDirect;
-	qhandle_t	obituariesBFGDirect;
-	qhandle_t	obituariesDrowned;
-	qhandle_t	obituariesMelted;
-	qhandle_t	obituariesLava;
-	qhandle_t	obituariesTelefrag;
-	qhandle_t	obituariesFallenCrashed;
-	qhandle_t	obituariesFalling;
-	qhandle_t	obituariesSkull;
-	
+	qhandle_t   obituariesGrenadeDirect;
+	qhandle_t   obituariesRocketDirect;
+	qhandle_t   obituariesBFGDirect;
+	qhandle_t   obituariesDrowned;
+	qhandle_t   obituariesMelted;
+	qhandle_t   obituariesLava;
+	qhandle_t   obituariesTelefrag;
+	qhandle_t   obituariesFallenCrashed;
+	qhandle_t   obituariesFalling;
+	qhandle_t   obituariesSkull;
+
 	// sounds
 	sfxHandle_t quadSound;
 	sfxHandle_t tracerSound;
@@ -1508,12 +1508,11 @@ extern vmCvar_t           cg_lightningHitsoundRateFix;
 extern vmCvar_t           cg_stackHitSounds;
 extern vmCvar_t           cg_drawCenterMessages;
 extern vmCvar_t           cg_unfreezeAlert;
-
 extern vmCvar_t           cg_itemsRespawnAnimation;
 extern vmCvar_t           cg_predictStepOffset;
 extern vmCvar_t         cg_enemyLightningColor;
 extern vmCvar_t         cg_uniqueColorTable;
-extern vmCvar_t			cg_noVoteBeep;
+extern vmCvar_t			    cg_noVoteBeep;
 
 //
 // cg_main.c
@@ -1610,6 +1609,8 @@ int CG_OSPDrawStringLenPix(const char* string, float charWidth, int flags, int t
 
 void CG_OSPDrawStringPrepare(const char* from, char* to, int size);
 void CG_OSPDrawString(float x, float y, const char* string, const vec4_t setColor, float charWidth, float charHeight, int maxWidth, int flags, vec4_t background);
+void CG_OSPDrawStringNew(float x, float y, const char* string, const vec4_t setColor, float charWidth, float charHeight, int maxWidth, int flags, vec4_t background, vec4_t border, vec4_t borderColor);
+
 void CG_FontSelect(int index);
 int CG_FontIndexFromName(const char* name);
 
@@ -2170,7 +2171,9 @@ int CG_NewParticleArea(int num);
 
 qboolean CG_DrawIntermission(void);
 /*************************************************************************************************/
-#define OSP_VERSION "0.06-test"
+// #define OSP_VERSION "0.06-test" // OSP2 ogirinal
+#define OSP_VERSION "be-0.01c" // BE
+
 
 
 //
