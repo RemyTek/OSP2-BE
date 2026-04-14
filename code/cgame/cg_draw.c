@@ -216,7 +216,7 @@ void CG_DrawHead(float x, float y, float w, float h, int clientNum, vec3_t headA
 			origin[0] = len / 0.268;    // len / tan( fov/2 )
 
 			VectorAdd(origin, ci->headOffset, origin);
-			
+
 			// Determine color based on player relationship
 			if (clientNum == cg.clientNum)
 			{
@@ -233,7 +233,7 @@ void CG_DrawHead(float x, float y, float w, float h, int clientNum, vec3_t headA
 				// Teammate - use team colors
 				VectorCopy(cgs.osp.teamColors.head, headColor);
 			}
-			
+
 			// allow per-model tweaking
 			CG_OSPDraw3DModel(x, y, w, h, cm, headSkin, origin, headAngles, headColor);
 
@@ -242,7 +242,7 @@ void CG_DrawHead(float x, float y, float w, float h, int clientNum, vec3_t headA
 	else if (cg_drawIcons.integer)
 	{
 		qhandle_t iconToUse;
-		
+
 		/* Use original icon when cg_drawRealHeads is active */
 		if (cg_drawRealHeads.integer && ci->originalModelIcon)
 		{
@@ -252,7 +252,7 @@ void CG_DrawHead(float x, float y, float w, float h, int clientNum, vec3_t headA
 		{
 			iconToUse = ci->modelIcon;
 		}
-		
+
 		CG_DrawPicOld(x, y, w, h, iconToUse);
 	}
 
@@ -2008,7 +2008,7 @@ CG_DrawIntermission
 qboolean CG_DrawIntermission(void)
 {
 	qboolean result;
-	
+
 	if (cg_q3compScoreboard.integer)
 	{
 		if (cgs.gametype >= GT_TEAM)
@@ -2027,7 +2027,7 @@ qboolean CG_DrawIntermission(void)
 	{
 		result = CG_DrawOldScoreboard();
 	}
-	
+
 	// Request scores every 2 seconds only when table is actually being drawn
 	if (result && cg.scoresRequestTime + 2000 < cg.time)
 	{
@@ -2038,7 +2038,7 @@ qboolean CG_DrawIntermission(void)
 			cg.realNumClients = CG_CountRealClients();
 		}
 	}
-	
+
 	return result;
 }
 
@@ -2362,7 +2362,7 @@ static void CG_DrawDamageFrame()
 	if (!cg.damageValue || cg.time - cg.damageTime <= 0 || cg.time - cg.damageTime >= DAMAGE_TIME)
 		return;
 
-	CG_AdjustFrom640(&x, &y, &w, &h);
+	CG_AdjustFrom640_Old(&x, &y, &w, &h, qfalse);
 
 	Vector4Set(red, 1.0f, 0.0f, 0.0f, cg_damageFrameOpaque.value);
 
@@ -2391,7 +2391,7 @@ static void CG_DrawHealthLowOverlay(void)
 	pulse = sin((float)cg.time * 2.0f * M_PI / 2000.0f) * 0.4f + 0.6f;
 	color[3] = pulse;
 
-	CG_AdjustFrom640(&x, &y, &w, &h);
+	CG_AdjustFrom640_Old(&x, &y, &w, &h, qfalse);
 	CG_OSPDrawBlurFrame(x, y, w, h, 128, color);
 }
 

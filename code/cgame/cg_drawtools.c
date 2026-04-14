@@ -114,11 +114,23 @@ Adjusted for resolution and screen aspect ratio
 */
 void CG_AdjustFrom640(float* x, float* y, float* w, float* h)
 {
-	// scale for screen sizes
+	// Full-screen stretch: maps 640x480 virtual space to the full viewport.
+	// screenXScale_Old = vidWidth/640, so x=0 stays left, x=640 stays right.
 	if (x) *x *= cgs.screenXScale_Old;
 	if (y) *y *= cgs.screenYScale_Old;
 	if (w) *w *= cgs.screenXScale_Old;
 	if (h) *h *= cgs.screenYScale_Old;
+}
+
+// Aspect-correct scaling for coordinates derived from 3D world projection.
+// Uses screenXScale (vidHeight/480) + centering bias so elements track
+// the renderer viewport on widescreen displays.
+void CG_AdjustFrom640Aspect(float* x, float* y, float* w, float* h)
+{
+	if (x) *x = *x * cgs.screenXScale + cgs.screenXBias;
+	if (y) *y = *y * cgs.screenYScale + cgs.screenYBias;
+	if (w) *w *= cgs.screenXScale;
+	if (h) *h *= cgs.screenYScale;
 }
 void CG_AdjustFrom640_Old(float* x, float* y, float* w, float* h, qboolean correctWide)
 {
@@ -385,6 +397,12 @@ void CG_DrawPicOld(float x, float y, float width, float height, qhandle_t hShade
 void CG_DrawPic(float x, float y, float width, float height, qhandle_t hShader)
 {
 	CG_AdjustFrom640(&x, &y, &width, &height);
+	trap_R_DrawStretchPic(x, y, width, height, 0, 0, 1, 1, hShader);
+}
+
+void CG_DrawPicAspect(float x, float y, float width, float height, qhandle_t hShader)
+{
+	CG_AdjustFrom640Aspect(&x, &y, &width, &height);
 	trap_R_DrawStretchPic(x, y, width, height, 0, 0, 1, 1, hShader);
 }
 
