@@ -537,7 +537,10 @@ static void CG_UseItem(centity_t* cent)
 		else
 		{
 			item = BG_FindItemForHoldable(itemNum);
-			CG_CenterPrint(va("Use %s", item->pickup_name), SCREEN_HEIGHT * 0.30, SMALLCHAR_WIDTH);
+			if (item)
+			{
+				CG_CenterPrint(va("Use %s", item->pickup_name), SCREEN_HEIGHT * 0.30, SMALLCHAR_WIDTH);
+			}
 		}
 	}
 
@@ -822,6 +825,12 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 			trap_S_StartSound(NULL, es->number, CHAN_VOICE, CG_CustomSound(es->number, "*jump1.wav"));
 			break;
 		case EV_TAUNT:
+		case EV_TAUNT_YES:
+		case EV_TAUNT_NO:
+		case EV_TAUNT_FOLLOWME:
+		case EV_TAUNT_GETFLAG:
+		case EV_TAUNT_GUARDBASE:
+		case EV_TAUNT_PATROL:
 			DEBUGNAME("EV_TAUNT");
 			if (cg_noTaunt.integer == 0)
 			{
@@ -1298,7 +1307,7 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 
 		default:
 			DEBUGNAME("UNKNOWN");
-			CG_Error("Unknown event: %i", event);
+			CG_Printf("Unknown event: %i\n", event);
 			break;
 	}
 

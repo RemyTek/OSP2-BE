@@ -368,6 +368,11 @@ static void CG_ConfigStringModified(void)
 		CG_ScoresDown_f();
 		// cgs.be.newStats.drawWindow = qtrue;
 	}
+	else if (num >= 35 && num < 35 + 69)
+	{
+		/* Threewave 1.7 portal slot configstrings (CS_TW_PORTAL_BASE + slot). */
+		CG_PortalUpdateSlot( num - 35 );
+	}
 	else if (num >= CS_MODELS && num < CS_MODELS + MAX_MODELS)
 	{
 		cgs.gameModels[ num - CS_MODELS ] = trap_R_RegisterModel(str);
@@ -610,7 +615,7 @@ static void CG_MapRestart(void)
 		cg.showScores = qfalse;
 		cg.showAccuracy = qfalse;
 	}
-	
+
 	cg.scoreFadeTime = 0;
 
 	CG_OSPWStatsUp_f();                                                             /* Address : 0xf5df Type : Interium */
@@ -1554,7 +1559,7 @@ void CG_ServerCommand(void)
 	if (Q_stricmp(cmd, "xstats1") == 0)
 	{
 		if (cgs.be.statsAllRequested)
-		{	
+		{
 			CG_BEParseXStatsToStatsAll();
 			xstats1_received_count++;
 			last_xstats1_sequence = cgs.serverCommandSequence;

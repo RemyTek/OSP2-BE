@@ -28,7 +28,7 @@ extern "C" {
 // because games can change separately from the main system version, we need a
 // second version that must match between game and cgame
 
-#define GAME_VERSION        "baseq3-1"
+#define GAME_VERSION        "threewave 1.7"
 
 #define DEFAULT_GRAVITY     800
 #define GIB_HEALTH          -40
@@ -363,6 +363,7 @@ typedef enum
 	WP_PLASMAGUN,
 	WP_BFG,
 	WP_GRAPPLING_HOOK,
+	WP_NAILGUN,
 
 	WP_NUM_WEAPONS
 } weapon_t;

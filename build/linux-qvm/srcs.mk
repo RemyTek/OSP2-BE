@@ -48,7 +48,7 @@ CG_SRC = \
  cg_superhud_element_spectators \
  cg_superhud_element_grid \
  l_crc \
- cg_chatfilter cg_crosshair \
+ cg_chatfilter cg_crosshair cg_portal \
  cg_be_util cg_be_stats \
  cg_cherryhud cg_cherryhud_elements cg_cherryhud_private cg_cherryhud_util \
  cg_cherryhud_element_decor \

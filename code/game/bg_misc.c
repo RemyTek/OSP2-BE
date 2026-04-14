@@ -93,6 +93,24 @@ gitem_t bg_itemlist[] =
 		/* sounds */ ""
 	},
 
+	/*QUAKED item_armor_green (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+	*/
+	{
+		"item_armor_green",
+		"sound/misc/arg_pkup.wav",
+		{
+			"models/powerups/armor/armor_green.md3",
+			0, 0, 0
+		},
+		/* icon */      "icons/greenarmoricon",
+		/* pickup */    "Light Armor",
+		25,
+		IT_ARMOR,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
 	/*QUAKED item_armor_combat (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 	*/
 	{
@@ -393,6 +411,24 @@ gitem_t bg_itemlist[] =
 		/* sounds */ ""
 	},
 
+	/*QUAKED weapon_nailgun (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+	*/
+	{
+		"weapon_nailgun",
+		"sound/misc/w_pkup.wav",
+		{
+			"models/weapons2/nailgun/nailgun.md3",
+			0, 0, 0
+		},
+		/* icon */      "icons/iconw_nailgun",
+		/* pickup */    "Nailgun",
+		10,
+		IT_WEAPON,
+		WP_NAILGUN,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
 	//
 	// AMMO ITEMS
 	//
@@ -537,6 +573,24 @@ gitem_t bg_itemlist[] =
 		15,
 		IT_AMMO,
 		WP_BFG,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	/*QUAKED ammo_nails (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+	*/
+	{
+		"ammo_nails",
+		"sound/misc/am_pkup.wav",
+		{
+			"models/powerups/ammo/nailgunam.md3",
+			0, 0, 0
+		},
+		/* icon */      "icons/icona_nailgun",
+		/* pickup */    "Nails",
+		20,
+		IT_AMMO,
+		WP_NAILGUN,
 		/* precache */ "",
 		/* sounds */ ""
 	},
@@ -697,6 +751,112 @@ gitem_t bg_itemlist[] =
 		/* sounds */ "sound/items/flight.wav"
 	},
 
+	//
+	// CCTF RUNE ITEMS
+	//
+
+	{
+		"item_str_cctf",
+		"sound/cctf/items/str_pickup.wav",
+		{
+			"models/powerups/runes/str.md3",
+			"models/powerups/runes/str_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/str_icon",
+		/* pickup */    "Strength",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_res_cctf",
+		"sound/cctf/items/res_pickup.wav",
+		{
+			"models/powerups/runes/res.md3",
+			"models/powerups/runes/res_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/res_icon",
+		/* pickup */    "Resistance",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_hst_cctf",
+		"sound/cctf/items/hst_pickup.wav",
+		{
+			"models/powerups/runes/hst.md3",
+			"models/powerups/runes/hst_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/hst_icon",
+		/* pickup */    "Haste",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_reg_cctf",
+		"sound/cctf/items/reg_pickup.wav",
+		{
+			"models/powerups/runes/reg.md3",
+			"models/powerups/runes/reg_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/reg_icon",
+		/* pickup */    "Regeneration",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_vmp_cctf",
+		"sound/cctf/items/vmp_pickup.wav",
+		{
+			"models/powerups/runes/vmp.md3",
+			"models/powerups/runes/vmp_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/vmp_icon",
+		/* pickup */    "Vampire",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_grp_cctf",
+		"sound/cctf/items/grp_pickup.wav",
+		{
+			"models/powerups/runes/grp.md3",
+			"models/powerups/runes/grp_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/grp_icon",
+		/* pickup */    "Monkey",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
 	/*QUAKED team_CTF_redflag (1 0 0) (-16 -16 -16) (16 16 16)
 	Only in CTF games
 	*/
@@ -734,17 +894,86 @@ gitem_t bg_itemlist[] =
 		/* precache */ "",
 		/* sounds */ ""
 	},
+
+	/*QUAKED team_CTF_neutralflag (0 0 1) (-16 -16 -16) (16 16 16)
+	Only in One Flag CTF games
+	*/
 	{
-		"item_armor_jacket",
-		"sound/misc/ar2_pkup.wav",
+		"team_CTF_neutralflag",
+		NULL,
 		{
-			"models/powerups/armor/armor_gre.md3",
+			"models/flags/w_flag.md3",
 			0, 0, 0
 		},
-		/* icon */      "icons/iconr_green",
-		/* pickup */    "Green Armor",
-		25,
-		IT_ARMOR,
+		/* icon */      "icons/icon_whiteflag",
+		/* pickup */    "White Flag",
+		0,
+		IT_TEAM,
+		PW_NEUTRALFLAG,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_silly",
+		"sound/items/sillyquad.wav",
+		{
+			"models/powerups/instant/qua2.md3",
+			"models/powerups/instant/qua2_ring.md3",
+			0, 0
+		},
+		/* icon */      "icons/sillyquadicon",
+		/* pickup */    "Silly Quad",
+		30,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_coin_small",
+		"sound/items/small_coin.wav",
+		{
+			"models/powerups/special/small_coin.md3",
+			0, 0, 0
+		},
+		/* icon */      "icons/coin_icon",
+		/* pickup */    "Worthless coin",
+		0,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_coin_medium",
+		"sound/items/medium_coin.wav",
+		{
+			"models/powerups/special/medium_coin.md3",
+			0, 0, 0
+		},
+		/* icon */      "icons/coin_icon",
+		/* pickup */    "Good enough coin",
+		0,
+		IT_POWERUP,
+		0,
+		/* precache */ "",
+		/* sounds */ ""
+	},
+
+	{
+		"item_coin_big",
+		"sound/items/big_coin.wav",
+		{
+			"models/powerups/special/big_coin.md3",
+			0, 0, 0
+		},
+		/* icon */      "icons/coin_icon",
+		/* pickup */    "THE coin",
+		0,
+		IT_POWERUP,
 		0,
 		/* precache */ "",
 		/* sounds */ ""
@@ -796,8 +1025,6 @@ gitem_t* BG_FindItemForHoldable(holdable_t pw)
 			return &bg_itemlist[i];
 		}
 	}
-
-	Com_Error(ERR_DROP, "HoldableItem not found");
 
 	return NULL;
 }

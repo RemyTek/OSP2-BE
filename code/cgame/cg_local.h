@@ -2347,6 +2347,12 @@ void CG_PlayerColorsLoadDefault(playerColors_t* colors);
 void CG_ClientInfoUpdateColors(clientInfo_t* ci, int clientNum);
 void CG_PlayerColorsFromCS(playerColors_t* colors, playerColorsOverride_t* override, const char* color1, const char* color2);
 //
+// cg_portal.c
+//
+void CG_PortalInit( void );
+void CG_PortalUpdateSlot( int slot );
+
+//
 // cg_chatfilter.c
 //
 #define CG_CHATFILTER_DEFAULT_FILE "chatfilter"

@@ -1005,7 +1005,7 @@ static void CG_UpdateModelFromString(char* modelName, char* skinName, const char
 		nameSkin = "default";
 	}
 
-	Q_strncpyz(modelName, nameModel, MAX_QPATH);
+	Q_strncpyz(modelName, nameModel[0] ? nameModel : DEFAULT_MODEL, MAX_QPATH);
 	Q_strncpyz(skinName, nameSkin ? nameSkin : "default", MAX_QPATH);
 }
 

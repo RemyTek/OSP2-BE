@@ -122,6 +122,10 @@ void CG_LoadingClient(int clientNum)
 		{
 			skin = "default";
 		}
+		if (!model[0])
+		{
+			Q_strncpyz(model, DEFAULT_MODEL, sizeof(model));
+		}
 
 		Com_sprintf(iconName, MAX_QPATH, "models/players/%s/icon_%s.tga", model, skin);
 

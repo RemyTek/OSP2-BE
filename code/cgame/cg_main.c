@@ -836,24 +836,24 @@ static void CG_RegisterSounds(void)
 	cgs.media.respawnSound = trap_S_RegisterSound("sound/items/respawn1.wav", qfalse);
 
 	cgs.media.noAmmoSound = trap_S_RegisterSound("sound/weapons/noammo.wav", qfalse);
-	cgs.media.lowAmmoSound = trap_S_RegisterSound("sound/weapons/lowammo.wav", qfalse);
+	cgs.media.lowAmmoSound = trap_S_RegisterSound("sound/weapons/noammo.wav", qfalse);
 
 	cgs.media.talkSound = trap_S_RegisterSound("sound/player/talk.wav", qfalse);
 	cgs.media.landSound = trap_S_RegisterSound("sound/player/land1.wav", qfalse);
 
-	cgs.media.hitLowestSound = trap_S_RegisterSound("sound/feedback/hitlowest.wav", qfalse);
-	cgs.media.hitLowSound = trap_S_RegisterSound("sound/feedback/hitlow.wav", qfalse);
+	cgs.media.hitLowestSound = trap_S_RegisterSound("sound/feedback/hit1.wav", qfalse);
+	cgs.media.hitLowSound = trap_S_RegisterSound("sound/feedback/hit2.wav", qfalse);
 	cgs.media.hitSound = trap_S_RegisterSound("sound/feedback/hit.wav", qfalse);
-	cgs.media.hitSounds[0] = trap_S_RegisterSound("sound/feedback/hit25.wav", qfalse);
-	cgs.media.hitSounds[1] = trap_S_RegisterSound("sound/feedback/hit50.wav", qfalse);
-	cgs.media.hitSounds[2] = trap_S_RegisterSound("sound/feedback/hit75.wav", qfalse);
-	cgs.media.hitSounds[3] = trap_S_RegisterSound("sound/feedback/hit100.wav", qfalse);
-	cgs.media.hitHighSound = trap_S_RegisterSound("sound/feedback/hithigh.wav", qfalse);
+	cgs.media.hitSounds[0] = trap_S_RegisterSound("sound/feedback/hit1.wav", qfalse);
+	cgs.media.hitSounds[1] = trap_S_RegisterSound("sound/feedback/hit2.wav", qfalse);
+	cgs.media.hitSounds[2] = trap_S_RegisterSound("sound/feedback/hit3.wav", qfalse);
+	cgs.media.hitSounds[3] = trap_S_RegisterSound("sound/feedback/hit4.wav", qfalse);
+	cgs.media.hitHighSound = trap_S_RegisterSound("sound/feedback/hit4.wav", qfalse);
 	// QC incoming damage sound
-	cgs.media.gotDamageSounds[0] = trap_S_RegisterSound("sound/feedback/damage_qc25.wav", qfalse);
-	cgs.media.gotDamageSounds[1] = trap_S_RegisterSound("sound/feedback/damage_qc50.wav", qfalse);
-	cgs.media.gotDamageSounds[2] = trap_S_RegisterSound("sound/feedback/damage_qc75.wav", qfalse);
-	cgs.media.gotDamageSounds[3] = trap_S_RegisterSound("sound/feedback/damage_qc100.wav", qfalse);
+	cgs.media.gotDamageSounds[0] = trap_S_RegisterSound("sound/feedback/hit1.wav", qfalse);
+	cgs.media.gotDamageSounds[1] = trap_S_RegisterSound("sound/feedback/hit2.wav", qfalse);
+	cgs.media.gotDamageSounds[2] = trap_S_RegisterSound("sound/feedback/hit3.wav", qfalse);
+	cgs.media.gotDamageSounds[3] = trap_S_RegisterSound("sound/feedback/hit4.wav", qfalse);
 
 	cgs.media.impressiveSound = trap_S_RegisterSound("sound/feedback/impressive.wav", qtrue);
 	cgs.media.excellentSound = trap_S_RegisterSound("sound/feedback/excellent.wav", qtrue);
@@ -953,7 +953,15 @@ qhandle_t CG_GetFragSound(void)
 		cgs.media.fragSound = trap_S_RegisterSound(path, qfalse);
 		if (!cgs.media.fragSound)
 		{
-			cgs.media.fragSound = trap_S_RegisterSound("sound/feedback/fragSound1.wav", qfalse);
+			// fragSound pack not present; fall back to Threewave frag announcer sounds
+			if (sound_index == 1)
+				cgs.media.fragSound = trap_S_RegisterSound("sound/feedback/1_frag.wav", qfalse);
+			else if (sound_index == 2)
+				cgs.media.fragSound = trap_S_RegisterSound("sound/feedback/2_frags.wav", qfalse);
+			else if (sound_index == 3)
+				cgs.media.fragSound = trap_S_RegisterSound("sound/feedback/3_frags.wav", qfalse);
+			else
+				cgs.media.fragSound = trap_S_RegisterSound("sound/feedback/1_frag.wav", qfalse);
 		}
 		loadedIndex = sound_index;
 	}
@@ -1690,7 +1698,7 @@ int CG_Init(int serverMessageNum, int serverCommandSequence, int clientNum)
 	CG_UpdateBeFeatures();
 
 	CG_InitConsoleCommands();
-	
+
 	if (cg_clientLog.integer)
 	{
 		char* tmp = va("client_logs/client%d.txt", cg_clientLog.integer);
@@ -1740,7 +1748,7 @@ int CG_Init(int serverMessageNum, int serverCommandSequence, int clientNum)
 	s = CG_ConfigString(CS_GAME_VERSION);
 	if (strcmp(s, GAME_VERSION))
 	{
-		CG_Error("Client/Server game mismatch: %s/%s", GAME_VERSION, s);
+		CG_Printf("Warning: Client/Server game mismatch: %s/%s\n", GAME_VERSION, s);
 	}
 
 // Разные константы для разных версий OSP, вероятно нужно оставить один вариант
@@ -1984,9 +1992,12 @@ int CG_Init(int serverMessageNum, int serverCommandSequence, int clientNum)
 	{
 		CG_CvarTouch("chud_file");
 	}
-	
+
 	CG_ChatfilterLoadFile(CG_CHATFILTER_DEFAULT_FILE);
-	
+
+	/* Remap Threewave portal surface textures to levelshots. */
+	CG_PortalInit();
+
 	if (cg_clearOnLevelLoad.integer)
 	{
 		trap_SendConsoleCommand("clear");
