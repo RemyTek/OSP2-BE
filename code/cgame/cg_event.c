@@ -930,11 +930,45 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 			break;
 		case EV_CHANGE_WEAPON:
 			DEBUGNAME("EV_CHANGE_WEAPON");
+			cent->loopFireWeapon = 0;   // stop any Threewave looping fire sound
 			trap_S_StartSound(NULL, es->number, CHAN_AUTO, cgs.media.selectSound);
 			break;
 		case EV_FIRE_WEAPON:
 			DEBUGNAME("EV_FIRE_WEAPON");
 			CG_FireWeapon(cent);
+			break;
+
+		// Threewave 1.7 weapon fire events.
+		//
+		// START: plays the weapon's start/attack sound (one-shot).
+		// LOOP:  continuous fire — records the looping weapon in cent->loopFireWeapon so
+		//        CG_AddPlayerWeapon can call trap_S_AddLoopingSound every frame.
+		// STOP:  clears the looping state.
+		// OFFHAND_RELEASE: no OSP2 counterpart.
+		case EV_FIRE_WEAPON_START:
+			DEBUGNAME("EV_FIRE_WEAPON_START");
+			{
+				weaponInfo_t *weap = &cg_weapons[es->weapon];
+				int c;
+				for (c = 0; c < 4 && weap->flashSound[c]; c++)
+					;
+				if (c > 0)
+					trap_S_StartSound(NULL, es->number, CHAN_WEAPON,
+					                  weap->flashSound[rand() % c]);
+			}
+			break;
+		case EV_FIRE_WEAPON_LOOP:
+			DEBUGNAME("EV_FIRE_WEAPON_LOOP");
+			// Record which weapon is looping so CG_AddPlayerWeapon plays
+			// firingSound every frame (Threewave doesn't set EF_FIRING).
+			cent->loopFireWeapon = es->weapon;
+			break;
+		case EV_FIRE_OFFHAND_RELEASE:
+			DEBUGNAME("EV_FIRE_OFFHAND_RELEASE");
+			break;
+		case EV_FIRE_WEAPON_STOP:
+			DEBUGNAME("EV_FIRE_WEAPON_STOP");
+			cent->loopFireWeapon = 0;
 			break;
 
 		case EV_USE_ITEM0:
@@ -1083,6 +1117,11 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 			}
 			break;
 
+		case EV_RAILTRAIL_DISABLED:
+			DEBUGNAME("EV_RAILTRAIL_DISABLED");
+			// Threewave 1.7 — rail trail suppressed by server; no visual
+			break;
+
 		case EV_BULLET_HIT_WALL:
 			DEBUGNAME("EV_BULLET_HIT_WALL");
 			ByteToDir(es->eventParm, dir);
@@ -1092,6 +1131,13 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 		case EV_BULLET_HIT_FLESH:
 			DEBUGNAME("EV_BULLET_HIT_FLESH");
 			CG_Bullet(es->pos.trBase, es->otherEntityNum, dir, qtrue, es->eventParm);
+			break;
+
+		case EV_BULLET:
+			// Threewave 1.7 — bullet impact at entity position; shooter in otherEntityNum
+			DEBUGNAME("EV_BULLET");
+			ByteToDir(es->eventParm, dir);
+			CG_Bullet(es->pos.trBase, es->otherEntityNum, dir, qfalse, ENTITYNUM_WORLD);
 			break;
 
 		case EV_SHOTGUN:
@@ -1255,6 +1301,7 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 		// powerup events
 		//
 		case EV_POWERUP_QUAD:
+		case EV_POWERUP_SILLYQUAD:  // Threewave 1.7 quad variant — same visual/sound
 			DEBUGNAME("EV_POWERUP_QUAD");
 			if (es->number == cg.snap->ps.clientNum)
 			{
@@ -1303,6 +1350,35 @@ void CG_EntityEvent(centity_t* cent, vec3_t position)
 		case EV_DEBUG_LINE:
 			DEBUGNAME("EV_DEBUG_LINE");
 			CG_Beam(cent);
+			break;
+
+		// Threewave 1.7 CTF events — no OSP2 cgame assets; acknowledged but silent
+		case EV_FLAGDROPPED:
+			DEBUGNAME("EV_FLAGDROPPED");
+			break;
+		case EV_QSTR_CCTF:
+			DEBUGNAME("EV_QSTR_CCTF");
+			break;
+		case EV_REG_CCTF:
+			DEBUGNAME("EV_REG_CCTF");
+			break;
+		case EV_STR_CCTF:
+			DEBUGNAME("EV_STR_CCTF");
+			break;
+		case EV_RES_CCTF:
+			DEBUGNAME("EV_RES_CCTF");
+			break;
+		case EV_HST_CCTF:
+			DEBUGNAME("EV_HST_CCTF");
+			break;
+		case EV_VMP_CCTF:
+			DEBUGNAME("EV_VMP_CCTF");
+			break;
+		case EV_HOLYSHIT:
+			DEBUGNAME("EV_HOLYSHIT");
+			break;
+		case EV_COIN_BOUNCE:
+			DEBUGNAME("EV_COIN_BOUNCE");
 			break;
 
 		default:

@@ -423,6 +423,12 @@ typedef enum
 	EV_CHANGE_WEAPON,
 	EV_FIRE_WEAPON,
 
+	// Threewave 1.7 weapon fire animation events (no visual/sound action in OSP2 cgame)
+	EV_FIRE_WEAPON_START,
+	EV_FIRE_WEAPON_LOOP,
+	EV_FIRE_OFFHAND_RELEASE,
+	EV_FIRE_WEAPON_STOP,
+
 	EV_USE_ITEM0,
 	EV_USE_ITEM1,
 	EV_USE_ITEM2,
@@ -458,6 +464,7 @@ typedef enum
 	EV_MISSILE_MISS,
 	EV_MISSILE_MISS_METAL,
 	EV_RAILTRAIL,
+	EV_RAILTRAIL_DISABLED,  // Threewave 1.7 - disabled rail trail variant
 	EV_SHOTGUN,
 	EV_BULLET,              // otherEntity is the shooter
 
@@ -468,6 +475,7 @@ typedef enum
 	EV_OBITUARY,
 
 	EV_POWERUP_QUAD,
+	EV_POWERUP_SILLYQUAD,   // Threewave 1.7 - quad sound variant
 	EV_POWERUP_BATTLESUIT,
 	EV_POWERUP_REGEN,
 
@@ -492,8 +500,19 @@ typedef enum
 	EV_TAUNT_NO,
 	EV_TAUNT_FOLLOWME,
 	EV_TAUNT_GETFLAG,
-	EV_TAUNT_GUARDBASE,
-	EV_TAUNT_PATROL
+	EV_TAUNT_GUARDBASE,     // last OSP2 taunt before Threewave CTF events
+
+	// Threewave 1.7 CTF events
+	EV_FLAGDROPPED,         // flag was dropped
+	EV_QSTR_CCTF,           // CCTF query-streak
+	EV_REG_CCTF,            // CCTF registration event
+	EV_STR_CCTF,            // CCTF streak event
+	EV_RES_CCTF,            // CCTF res event
+	EV_HST_CCTF,            // CCTF highest-streak event
+	EV_VMP_CCTF,            // CCTF vamp event
+	EV_TAUNT_PATROL,        // OSP2 patrol taunt (occupies Threewave no-op slot 0x5f)
+	EV_HOLYSHIT,            // Threewave multi-kill event
+	EV_COIN_BOUNCE          // Threewave bounced projectile
 
 } entity_event_t;
 

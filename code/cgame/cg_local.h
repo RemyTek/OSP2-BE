@@ -211,6 +211,11 @@ typedef struct centity_s
 	// exact interpolated position of entity on this frame
 	vec3_t          lerpOrigin;
 	vec3_t          lerpAngles;
+
+	// Threewave 1.7 event-based looping fire sound (set by EV_FIRE_WEAPON_LOOP,
+	// cleared by EV_FIRE_WEAPON_STOP or EV_CHANGE_WEAPON).
+	// Holds the WP_* value of the weapon whose firingSound should loop, or 0.
+	int             loopFireWeapon;
 } centity_t;
 
 

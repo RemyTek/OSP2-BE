@@ -1412,7 +1412,7 @@ char* eventnames[] =
 	"EV_FALL_MEDIUM",
 	"EV_FALL_FAR",
 
-	"EV_JUMP_PAD",          // boing sound at origin", jump sound on player
+	"EV_JUMP_PAD",          // boing sound at origin, jump sound on player
 
 	"EV_JUMP",
 	"EV_WATER_TOUCH",   // foot touches
@@ -1426,6 +1426,12 @@ char* eventnames[] =
 	"EV_NOAMMO",
 	"EV_CHANGE_WEAPON",
 	"EV_FIRE_WEAPON",
+
+	// Threewave 1.7 weapon animation events
+	"EV_FIRE_WEAPON_START",
+	"EV_FIRE_WEAPON_LOOP",
+	"EV_FIRE_OFFHAND_RELEASE",
+	"EV_FIRE_WEAPON_STOP",
 
 	"EV_USE_ITEM0",
 	"EV_USE_ITEM1",
@@ -1462,6 +1468,7 @@ char* eventnames[] =
 	"EV_MISSILE_MISS",
 	"EV_MISSILE_MISS_METAL",
 	"EV_RAILTRAIL",
+	"EV_RAILTRAIL_DISABLED",    // Threewave 1.7
 	"EV_SHOTGUN",
 	"EV_BULLET",                // otherEntity is the shooter
 
@@ -1472,25 +1479,44 @@ char* eventnames[] =
 	"EV_OBITUARY",
 
 	"EV_POWERUP_QUAD",
+	"EV_POWERUP_SILLYQUAD",     // Threewave 1.7
 	"EV_POWERUP_BATTLESUIT",
 	"EV_POWERUP_REGEN",
 
 	"EV_GIB_PLAYER",            // gib a previously living player
-	"EV_SCOREPLUM",         // score plum
+	"EV_SCOREPLUM",             // score plum
 
 //#ifdef MISSIONPACK
 	"EV_PROXIMITY_MINE_STICK",
 	"EV_PROXIMITY_MINE_TRIGGER",
 	"EV_KAMIKAZE",          // kamikaze explodes
 	"EV_OBELISKEXPLODE",        // obelisk explodes
+	"EV_OBELISKPAIN",           // obelisk is in pain
 	"EV_INVUL_IMPACT",      // invulnerability sphere impact
 	"EV_JUICED",                // invulnerability juiced effect
-	"EV_LIGHTNINGBOLT",     // lightning bolt bounced of invulnerability sphere
+	"EV_LIGHTNINGBOLT",     // lightning bolt bounced off invulnerability sphere
 //#endif
 
 	"EV_DEBUG_LINE",
 	"EV_STOPLOOPINGSOUND",
-	"EV_TAUNT"
+	"EV_TAUNT",
+	"EV_TAUNT_YES",
+	"EV_TAUNT_NO",
+	"EV_TAUNT_FOLLOWME",
+	"EV_TAUNT_GETFLAG",
+	"EV_TAUNT_GUARDBASE",
+
+	// Threewave 1.7 CTF events
+	"EV_FLAGDROPPED",
+	"EV_QSTR_CCTF",
+	"EV_REG_CCTF",
+	"EV_STR_CCTF",
+	"EV_RES_CCTF",
+	"EV_HST_CCTF",
+	"EV_VMP_CCTF",
+	"EV_TAUNT_PATROL",
+	"EV_HOLYSHIT",
+	"EV_COIN_BOUNCE"
 
 };
 

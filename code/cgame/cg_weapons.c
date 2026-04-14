@@ -1667,7 +1667,9 @@ void CG_AddPlayerWeapon(refEntity_t* parent, playerState_t* ps, centity_t* cent,
 	{
 		// add weapon ready sound
 		cent->pe.lightningFiring = qfalse;
-		if ((cent->currentState.eFlags & EF_FIRING) && weapon->firingSound)
+		if (((cent->currentState.eFlags & EF_FIRING) ||
+		     (cent->loopFireWeapon != 0 && cent->loopFireWeapon == cent->currentState.weapon)) &&
+		    weapon->firingSound)
 		{
 			// lightning gun and guantlet make a different sound when fire is held down
 			if (cent->currentState.number != cg.clientNum || cg.snap->ps.weaponstate == WEAPON_READY || cg.snap->ps.weaponstate == WEAPON_FIRING)
